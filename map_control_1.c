@@ -6,11 +6,23 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:57:02 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/07/01 21:33:30 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:53:38 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static int	strlen_newline(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] != '\n' && str[i] != '\0')
+		i++;
+	return (i);
+}
 
 void	map_check(char *argv, t_map *game)
 {
@@ -50,11 +62,11 @@ void	map_check_2(char *argv, t_map *game)
 	close(fd);
 	free(line);
 	if (game->row == 0)
-		ft_error("Error: The map is empty.", game);
+		ft_error("Error\nThe map is empty.", game);
 	game->map = (char **)malloc(game->row * sizeof(char *));
 	game->cpymap = (char **)malloc(game->row * sizeof(char *));
-	if (game->map == NULL || game->map == NULL)
-		ft_error_1("Error: Memory problem!", game);
+	if (game->map == NULL || game->cpymap == NULL)
+		ft_error_1("Error:\nMemory problem!", game);
 }
 
 void	map(char *argv, t_map *game)
@@ -66,7 +78,7 @@ void	map(char *argv, t_map *game)
 	fd = open(argv, O_RDONLY);
 	while (++i < game->row)
 		game->map[i] = get_next_line(fd);
-	game->col = ft_strlen(game->map[0]);
+	game->col = strlen_newline(game->map[0]);
 	close(fd);
 	fd = open(argv, O_RDONLY);
 	i = -1;
@@ -82,30 +94,8 @@ void	is_rectangle(t_map *game)
 	i = 1;
 	while (i < game->row)
 	{
-		if (game->col != ft_strlen(game->map[i]))
-			ft_error_1("Error: The map is not rectangle.", game);
+		if (game->col != strlen_newline(game->map[i]))
+			ft_error_1("Error:\nThe map is not rectangle.", game);
 		i++;
 	}
-
-}
-
-void	wall_check(t_map *game)
-{
-	int	i;
-
-	i = -1;
-	while (++i < (game->col - 1))
-	{
-		if (game->map[0][i] != '1' || game->map[game->row - 1][i] != '1')
-			ft_error_1("Error: The map must be enclosed by a wall.", game);
-	}
-	i = 1;
-	while (i < (game->row - 1))
-	{
-		if (game->map[i][0] != '1' || game->map[i][game->col - 2] != '1')
-			ft_error_1("Error: The map must be enclosed by a wall.", game);
-		i++;
-	}
-	if (game->row >= 23 || game->col >= 42)
-		ft_error_1("Error: The map does not fit on the screen!", game);
 }

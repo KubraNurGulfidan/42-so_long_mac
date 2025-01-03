@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 12:56:00 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/07/01 18:35:04 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:55:17 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include "gnl/get_next_line.h"
 # include "mlx/mlx.h"
 # include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
 
 typedef struct s_mlx
 {
@@ -28,7 +26,6 @@ typedef struct s_mlx
 	void	*exit;
 	void	*wall;
 	void	*ground;
-
 }			t_mlx;
 
 typedef struct s_map
@@ -46,7 +43,6 @@ typedef struct s_map
 	int		movment;
 	int		row;
 	int		col;
-
 }			t_map;
 
 void		map_check(char *argv, t_map *game);
@@ -68,9 +64,9 @@ void		ft_error_1(char *message, t_map *game);
 void		ft_error_2(char *message, t_map *game);
 void		ft_full_free(t_map *game);
 void		ft_free_mlx(t_map *game);
-void		ft_putnbr_fd(int n, int fd);
-void		ft_putchar_fd(char c, int fd);
 int			key_press(int key_kode, t_map *game);
 void		ft_finish(t_map *game);
+void		ft_putnbr_fd(int n, int fd);
+void		ft_putchar_fd(char c, int fd);
 
 #endif

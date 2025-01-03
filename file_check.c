@@ -6,7 +6,7 @@
 /*   By: kgulfida <kgulfida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:41:14 by kgulfida          #+#    #+#             */
-/*   Updated: 2024/07/01 21:14:30 by kgulfida         ###   ########.fr       */
+/*   Updated: 2024/07/03 12:59:53 by kgulfida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	open_window(t_map *game)
 	int	w;
 
 	game->data->mlx = mlx_init();
-	game->data->window = mlx_new_window(game->data->mlx, (game->col - 1) * 64,
+	game->data->window = mlx_new_window(game->data->mlx, (game->col) * 64,
 			(game->row) * 64, "so_long");
 	game->data->coin = mlx_xpm_file_to_image(game->data->mlx,
 			"./textures/coin.xpm", &h, &w);
@@ -51,6 +51,12 @@ void	open_window(t_map *game)
 			"./textures/player.xpm", &h, &w);
 	game->data->wall = mlx_xpm_file_to_image(game->data->mlx,
 			"./textures/wall.xpm", &h, &w);
+	if (!game->data->player || !game->data->exit || !game->data->coin
+		|| !game->data->ground || !game->data->wall)
+	{
+		ft_error_2("Error:\nMissing image file!", game);
+		exit(1);
+	}
 	put_image(game);
 }
 
